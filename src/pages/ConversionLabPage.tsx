@@ -181,24 +181,24 @@ export const ConversionLabPage: React.FC = () => {
   }, [result, resultAutomaton]);
 
   return (
-    <div className="flex-1 overflow-y-auto bg-zinc-950 text-zinc-100 p-8 flex flex-col items-center">
+    <div className="flex-1 overflow-y-auto bg-slate-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 p-8 flex flex-col items-center transition-colors duration-200">
       <div className="w-full max-w-5xl space-y-8">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-800 pb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-zinc-200 dark:border-zinc-800 pb-6">
           <div>
-            <div className="flex items-center gap-2 text-violet-400 text-xs font-semibold uppercase tracking-wider mb-1">
+            <div className="flex items-center gap-2 text-violet-600 dark:text-violet-400 text-xs font-semibold uppercase tracking-wider mb-1">
               <Shuffle className="w-4 h-4" />
               <span>Equivalence &amp; Construction</span>
             </div>
-            <h1 className="text-3xl font-bold tracking-tight text-zinc-100">Conversion Lab</h1>
-            <p className="text-sm text-zinc-400 mt-1">
+            <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">Conversion Lab</h1>
+            <p className="text-sm text-zinc-600 dark:text-zinc-400 mt-1">
               Convert between Regex, ε-NFA, NFA, and DFA representations using AutomataLab's conversion engine.
             </p>
           </div>
 
           <button
             onClick={() => setActivePage('editor')}
-            className="self-start md:self-auto inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-zinc-900 border border-zinc-800 font-medium text-xs text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100 transition-colors"
+            className="self-start md:self-auto inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white border border-zinc-300 font-medium text-xs text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 dark:bg-zinc-900 dark:border-zinc-800 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 transition-colors cursor-pointer shadow-xs"
           >
             <PenTool className="w-3.5 h-3.5" />
             <span>Open Editor</span>
@@ -206,16 +206,16 @@ export const ConversionLabPage: React.FC = () => {
         </div>
 
         {/* Source / Target Selection */}
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 space-y-5">
+        <div className="rounded-2xl border border-zinc-200 bg-white p-6 space-y-5 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
           <div className="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-4 items-end">
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-2">
                 Source Type
               </label>
               <select
                 value={sourceKind}
                 onChange={e => handleSourceKindChange(e.target.value as AutomatonKind)}
-                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500"
+                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
               >
                 {KIND_ORDER.map(kind => (
                   <option key={kind} value={kind}>
@@ -225,18 +225,18 @@ export const ConversionLabPage: React.FC = () => {
               </select>
             </div>
 
-            <div className="hidden sm:flex items-center justify-center pb-2.5 text-zinc-600">
+            <div className="hidden sm:flex items-center justify-center pb-2.5 text-zinc-400 dark:text-zinc-600">
               <ArrowRight className="w-5 h-5" />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-2">
+              <label className="block text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-2">
                 Target Type
               </label>
               <select
                 value={targetKind}
                 onChange={e => handleTargetKindChange(e.target.value as AutomatonKind)}
-                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500"
+                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
               >
                 {KIND_ORDER.map(kind => (
                   <option key={kind} value={kind}>
@@ -248,7 +248,7 @@ export const ConversionLabPage: React.FC = () => {
           </div>
 
           {isIdentical && (
-            <div className="flex items-center gap-2 text-xs text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2">
+            <div className="flex items-center gap-2 text-xs text-amber-700 dark:text-amber-400 bg-amber-500/10 border border-amber-500/30 rounded-lg px-3 py-2">
               <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
               <span>Source and target types must be different.</span>
             </div>
@@ -258,10 +258,10 @@ export const ConversionLabPage: React.FC = () => {
             <button
               onClick={handleConvert}
               disabled={!canConvert}
-              className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg ${
+              className={`inline-flex items-center gap-2 px-6 py-2.5 rounded-xl font-semibold text-sm transition-colors shadow-lg cursor-pointer ${
                 canConvert
                   ? 'bg-violet-600 text-white hover:bg-violet-500 shadow-violet-600/30'
-                  : 'bg-zinc-800 text-zinc-500 cursor-not-allowed shadow-none'
+                  : 'bg-zinc-200 text-zinc-400 dark:bg-zinc-800 dark:text-zinc-500 cursor-not-allowed shadow-none'
               }`}
             >
               {isConverting ? (
@@ -280,8 +280,8 @@ export const ConversionLabPage: React.FC = () => {
         </div>
 
         {/* Source Automaton / Regex Input */}
-        <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 space-y-4">
-          <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-400">Source Automaton</h2>
+        <div className="rounded-2xl border border-zinc-200 bg-white p-6 space-y-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
+          <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">Source Automaton</h2>
 
           {isRegexSource ? (
             <div className="space-y-2">
@@ -295,11 +295,11 @@ export const ConversionLabPage: React.FC = () => {
                   setError(null);
                 }}
                 placeholder="(a|b)*abb"
-                className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2.5 font-mono text-sm text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500"
+                className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 font-mono text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
               />
               <p className="text-[11px] text-zinc-500">
-                Supports union (<code className="text-zinc-400">|</code>), concatenation, Kleene star (
-                <code className="text-zinc-400">*</code>), and grouping with parentheses.
+                Supports union (<code className="text-zinc-700 dark:text-zinc-400">|</code>), concatenation, Kleene star (
+                <code className="text-zinc-700 dark:text-zinc-400">*</code>), and grouping with parentheses.
               </p>
             </div>
           ) : (
@@ -311,10 +311,10 @@ export const ConversionLabPage: React.FC = () => {
                     setResult(null);
                     setError(null);
                   }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
                     sourceMode === 'editor'
                       ? 'bg-violet-600 border-violet-500 text-white'
-                      : 'bg-zinc-950 border-zinc-700 text-zinc-400 hover:text-zinc-200'
+                      : 'bg-zinc-100 border-zinc-300 text-zinc-700 hover:text-zinc-900 dark:bg-zinc-950 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'
                   }`}
                 >
                   Use Current Editor Data
@@ -325,10 +325,10 @@ export const ConversionLabPage: React.FC = () => {
                     setResult(null);
                     setError(null);
                   }}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-xs font-medium border transition-colors cursor-pointer ${
                     sourceMode === 'sample'
                       ? 'bg-violet-600 border-violet-500 text-white'
-                      : 'bg-zinc-950 border-zinc-700 text-zinc-400 hover:text-zinc-200'
+                      : 'bg-zinc-100 border-zinc-300 text-zinc-700 hover:text-zinc-900 dark:bg-zinc-950 dark:border-zinc-700 dark:text-zinc-400 dark:hover:text-zinc-200'
                   }`}
                 >
                   Use a Sample
@@ -336,15 +336,15 @@ export const ConversionLabPage: React.FC = () => {
               </div>
 
               {sourceMode === 'editor' ? (
-                <div className="text-xs text-zinc-400 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2.5">
+                <div className="text-xs text-zinc-600 bg-zinc-50 border border-zinc-200 rounded-lg px-3 py-2.5 dark:text-zinc-400 dark:bg-zinc-950 dark:border-zinc-800">
                   {editorHasData ? (
                     <span>
-                      Using the current Editor automaton — treated as a <strong className="text-zinc-200">{KIND_LABELS[sourceKind]}</strong>:{' '}
+                      Using the current Editor automaton — treated as a <strong className="text-zinc-900 dark:text-zinc-200">{KIND_LABELS[sourceKind]}</strong>:{' '}
                       {storeStates.length} state{storeStates.length === 1 ? '' : 's'}, {storeTransitions.length} transition
                       {storeTransitions.length === 1 ? '' : 's'}.
                     </span>
                   ) : (
-                    <span className="text-amber-400 flex items-center gap-1.5">
+                    <span className="text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
                       <AlertTriangle className="w-3.5 h-3.5" />
                       The Editor canvas is currently empty. Add states there, or switch to a sample.
                     </span>
@@ -353,7 +353,7 @@ export const ConversionLabPage: React.FC = () => {
               ) : (
                 <div className="space-y-2">
                   {samples.length === 0 ? (
-                    <p className="text-xs text-amber-400 flex items-center gap-1.5">
+                    <p className="text-xs text-amber-700 dark:text-amber-400 flex items-center gap-1.5">
                       <AlertTriangle className="w-3.5 h-3.5" />
                       No built-in samples for {KIND_LABELS[sourceKind]} yet — use the Editor instead.
                     </p>
@@ -366,7 +366,7 @@ export const ConversionLabPage: React.FC = () => {
                           setResult(null);
                           setError(null);
                         }}
-                        className="w-full rounded-lg border border-zinc-700 bg-zinc-950 px-3 py-2 text-sm text-zinc-100 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500"
+                        className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
                       >
                         {samples.map(s => (
                           <option key={s.id} value={s.id}>
@@ -385,7 +385,7 @@ export const ConversionLabPage: React.FC = () => {
 
         {/* Error Banner */}
         {error && (
-          <div className="flex items-start gap-2.5 rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3.5 text-sm text-rose-300">
+          <div className="flex items-start gap-2.5 rounded-2xl border border-rose-500/30 bg-rose-500/10 px-4 py-3.5 text-sm text-rose-700 dark:text-rose-300">
             <AlertTriangle className="w-4 h-4 shrink-0 mt-0.5" />
             <span>{error}</span>
           </div>
@@ -394,12 +394,12 @@ export const ConversionLabPage: React.FC = () => {
         {/* Result */}
         {result && (
           <>
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 space-y-4">
-              <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-400">Result</h2>
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 space-y-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">Result</h2>
 
               {typeof result.result === 'string' ? (
-                <div className="rounded-xl border border-zinc-800 bg-zinc-950 px-5 py-6 flex items-center justify-center">
-                  <span className="font-mono text-lg text-violet-300 break-all text-center">
+                <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-5 py-6 flex items-center justify-center dark:border-zinc-800 dark:bg-zinc-950">
+                  <span className="font-mono text-lg text-violet-700 dark:text-violet-300 break-all text-center">
                     {result.result || '(empty)'}
                   </span>
                 </div>
@@ -411,8 +411,8 @@ export const ConversionLabPage: React.FC = () => {
             </div>
 
             {/* Conversion Info */}
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6">
-              <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-400 mb-4">Conversion Info</h2>
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400 mb-4">Conversion Info</h2>
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <div>
                   <div className="text-[11px] text-zinc-500 mb-1">Source</div>
@@ -437,7 +437,7 @@ export const ConversionLabPage: React.FC = () => {
                 {resultStats && (
                   <div>
                     <div className="text-[11px] text-zinc-500 mb-1">States / Transitions</div>
-                    <span className="font-mono text-sm text-zinc-200">
+                    <span className="font-mono text-sm text-zinc-900 dark:text-zinc-200">
                       {resultStats.states} / {resultStats.transitions}
                     </span>
                   </div>
@@ -446,8 +446,8 @@ export const ConversionLabPage: React.FC = () => {
             </div>
 
             {/* Step-by-step */}
-            <div className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6 space-y-3">
-              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-zinc-400">
+            <div className="rounded-2xl border border-zinc-200 bg-white p-6 space-y-3 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
+              <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
                 <ListChecks className="w-3.5 h-3.5" />
                 <span>Conversion Steps</span>
               </div>
@@ -457,18 +457,18 @@ export const ConversionLabPage: React.FC = () => {
               ) : (
                 <div className="space-y-2.5">
                   {result.steps.map((step, i) => (
-                    <div key={step.id} className="rounded-xl border border-zinc-800 bg-zinc-950 px-4 py-3">
+                    <div key={step.id} className="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 dark:border-zinc-800 dark:bg-zinc-950">
                       <div className="flex items-center gap-2 mb-1">
-                        <span className="font-mono text-[11px] font-bold text-violet-400">Step {i + 1}</span>
+                        <span className="font-mono text-[11px] font-bold text-violet-600 dark:text-violet-400">Step {i + 1}</span>
                         {step.ruleApplied && (
                           <Badge variant="outline" size="sm">
                             {step.ruleApplied}
                           </Badge>
                         )}
                       </div>
-                      <p className="text-sm text-zinc-200 font-medium">{step.title}</p>
+                      <p className="text-sm text-zinc-900 dark:text-zinc-200 font-medium">{step.title}</p>
                       {step.description && (
-                        <p className="text-xs text-zinc-400 mt-1 leading-relaxed whitespace-pre-line">
+                        <p className="text-xs text-zinc-600 dark:text-zinc-400 mt-1 leading-relaxed whitespace-pre-line">
                           {step.description}
                         </p>
                       )}
@@ -476,8 +476,8 @@ export const ConversionLabPage: React.FC = () => {
                   ))}
 
                   <div className="flex items-center gap-2 rounded-xl border border-violet-500/30 bg-violet-500/10 px-4 py-3">
-                    <Sparkles className="w-4 h-4 text-violet-400" />
-                    <span className="text-sm font-semibold text-violet-300">Final Result</span>
+                    <Sparkles className="w-4 h-4 text-violet-600 dark:text-violet-400" />
+                    <span className="text-sm font-semibold text-violet-700 dark:text-violet-300">Final Result</span>
                   </div>
                 </div>
               )}

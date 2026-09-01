@@ -14,12 +14,12 @@ export const Badge: React.FC<BadgeProps> = ({
   className = ''
 }) => {
   const variantStyles = {
-    default: 'bg-zinc-800 text-zinc-300 border-zinc-700/60',
-    success: 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30',
-    warning: 'bg-amber-500/10 text-amber-400 border-amber-500/30',
-    error: 'bg-rose-500/10 text-rose-400 border-rose-500/30',
-    accent: 'bg-violet-500/15 text-violet-300 border-violet-500/30',
-    outline: 'bg-transparent text-zinc-400 border-zinc-700/80'
+    default: 'bg-zinc-100 text-zinc-700 border-zinc-300/80 dark:bg-zinc-800 dark:text-zinc-300 dark:border-zinc-700/60',
+    success: 'bg-emerald-50 text-emerald-700 border-emerald-300 dark:bg-emerald-500/10 dark:text-emerald-400 dark:border-emerald-500/30',
+    warning: 'bg-amber-50 text-amber-700 border-amber-300 dark:bg-amber-500/10 dark:text-amber-400 dark:border-amber-500/30',
+    error: 'bg-rose-50 text-rose-700 border-rose-300 dark:bg-rose-500/10 dark:text-rose-400 dark:border-rose-500/30',
+    accent: 'bg-violet-50 text-violet-700 border-violet-300 dark:bg-violet-500/15 dark:text-violet-300 dark:border-violet-500/30',
+    outline: 'bg-transparent text-zinc-600 border-zinc-300 dark:text-zinc-400 dark:border-zinc-700/80'
   };
 
   const sizeStyles = {

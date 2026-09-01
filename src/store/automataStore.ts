@@ -147,16 +147,28 @@ const defaultAccepting: string[] = initialAutosave ? initialAutosave.acceptingSt
 // Extract highest state counter number
 const initialCounter = defaultStates.reduce((max, s) => {
   const match = s.name.match(/^q(\d+)$/);
+
   if (match) {
     const num = parseInt(match[1], 10);
     return Math.max(max, num + 1);
   }
+
   return max;
-}, defaultStates.length);
+}, 0);
+
+// Extract saved theme or default to 'dark'
+const savedTheme =
+  (typeof window !== 'undefined' &&
+    (localStorage.getItem('automatalab_theme') as ThemeMode)) ||
+  'dark';
+
+if (typeof document !== 'undefined') {
+  document.documentElement.classList.toggle('dark', savedTheme === 'dark');
+}
 
 export const useAutomataStore = create<AutomataStoreState>((set, get) => ({
   activePage: 'home',
-  theme: 'dark',
+  theme: savedTheme,
 
   canvasSettings: {
     showGrid: true,
@@ -189,13 +201,19 @@ export const useAutomataStore = create<AutomataStoreState>((set, get) => ({
   setActivePage: (page) => set({ activePage: page }),
 
   setTheme: (theme) => {
-    document.documentElement.classList.toggle('dark', theme === 'dark');
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.toggle('dark', theme === 'dark');
+      localStorage.setItem('automatalab_theme', theme);
+    }
     set({ theme });
   },
 
   toggleTheme: () => {
     const next = get().theme === 'dark' ? 'light' : 'dark';
-    document.documentElement.classList.toggle('dark', next === 'dark');
+    if (typeof document !== 'undefined') {
+      document.documentElement.classList.toggle('dark', next === 'dark');
+      localStorage.setItem('automatalab_theme', next);
+    }
     set({ theme: next });
   },
 

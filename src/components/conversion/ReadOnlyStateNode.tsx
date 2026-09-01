@@ -21,18 +21,18 @@ export interface ReadOnlyStateNodeData {
 
 export const ReadOnlyStateNode: React.FC<NodeProps<ReadOnlyStateNodeData>> = ({ data }) => {
   const borderClass = data.isStart
-    ? 'border-violet-500/80 bg-zinc-900/90'
+    ? 'border-violet-600 bg-white dark:border-violet-500/80 dark:bg-zinc-900/90 shadow-sm'
     : data.isAccepting
-    ? 'border-emerald-500/80 bg-zinc-900/90'
-    : 'border-zinc-600 bg-zinc-900/90';
+    ? 'border-emerald-600 bg-white dark:border-emerald-500/80 dark:bg-zinc-900/90 shadow-sm'
+    : 'border-zinc-400 bg-white dark:border-zinc-600 dark:bg-zinc-900/90 shadow-sm';
 
   return (
     <div className="relative flex items-center justify-center select-none">
       {data.isStart && (
         <div className="absolute -left-12 top-1/2 -translate-y-1/2 flex items-center pointer-events-none z-20">
-          <div className="flex items-center gap-0.5 rounded-md border border-violet-500/40 bg-zinc-950 px-1.5 py-0.5 shadow">
-            <span className="font-mono text-[9px] font-bold text-violet-300 uppercase tracking-wider">Start</span>
-            <ArrowRight className="w-3 h-3 text-violet-400 stroke-[2.5]" />
+          <div className="flex items-center gap-0.5 rounded-md border border-violet-500/40 bg-white dark:bg-zinc-950 px-1.5 py-0.5 shadow-sm">
+            <span className="font-mono text-[9px] font-bold text-violet-700 dark:text-violet-300 uppercase tracking-wider">Start</span>
+            <ArrowRight className="w-3 h-3 text-violet-600 dark:text-violet-400 stroke-[2.5]" />
           </div>
         </div>
       )}
@@ -43,11 +43,11 @@ export const ReadOnlyStateNode: React.FC<NodeProps<ReadOnlyStateNodeData>> = ({ 
         } ${borderClass}`}
       >
         {data.isAccepting && (
-          <div className="absolute rounded-full pointer-events-none w-[46px] h-[46px] border-2 border-emerald-400/80" />
+          <div className="absolute rounded-full pointer-events-none w-[46px] h-[46px] border-2 border-emerald-500/90 dark:border-emerald-400/80" />
         )}
 
         <div className="z-10 flex items-center justify-center px-1 text-center font-mono font-semibold text-xs">
-          <span className="truncate max-w-[38px] tracking-tight text-zinc-100" title={data.name}>
+          <span className="truncate max-w-[38px] tracking-tight text-zinc-900 dark:text-zinc-100" title={data.name}>
             {data.name}
           </span>
         </div>

@@ -167,7 +167,7 @@ export function App() {
   ]);
 
   return (
-    <div className="flex flex-col w-screen h-screen overflow-hidden bg-zinc-950 text-zinc-100 antialiased">
+    <div className="flex flex-col w-screen h-screen overflow-hidden bg-slate-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 antialiased transition-colors duration-200">
       {/* Top Navbar */}
       <TopNavbar />
 

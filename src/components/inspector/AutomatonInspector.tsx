@@ -30,7 +30,7 @@ export const AutomatonInspector: React.FC = () => {
   const startStateName = startStateId ? stateMap.get(startStateId) || 'None' : 'None';
 
   return (
-    <div className="flex flex-col gap-6 text-zinc-300">
+    <div className="flex flex-col gap-6 text-zinc-700 dark:text-zinc-300">
       {/* Header */}
       <div>
         <div className="flex items-center justify-between">
@@ -39,29 +39,29 @@ export const AutomatonInspector: React.FC = () => {
             {automatonType}
           </Badge>
         </div>
-        <h2 className="text-xl font-bold text-zinc-100 tracking-tight mt-1">Formal Specification</h2>
+        <h2 className="text-xl font-bold text-zinc-900 dark:text-zinc-100 tracking-tight mt-1">Formal Specification</h2>
       </div>
 
       {/* Model Type Selector */}
       <div className="space-y-2">
-        <label className="text-xs font-semibold text-zinc-400">Model Type</label>
-        <div className="grid grid-cols-2 gap-2 bg-zinc-950 p-1 rounded-lg border border-zinc-800">
+        <label className="text-xs font-semibold text-zinc-600 dark:text-zinc-400">Model Type</label>
+        <div className="grid grid-cols-2 gap-2 bg-zinc-100 dark:bg-zinc-950 p-1 rounded-lg border border-zinc-200 dark:border-zinc-800">
           <button
             onClick={() => setAutomatonType('DFA')}
-            className={`py-1.5 px-3 rounded-md text-xs font-medium transition-all ${
+            className={`py-1.5 px-3 rounded-md text-xs font-medium transition-all cursor-pointer ${
               automatonType === 'DFA'
                 ? 'bg-violet-600 text-white shadow-md'
-                : 'text-zinc-400 hover:text-zinc-200'
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
             }`}
           >
             DFA (Deterministic)
           </button>
           <button
             onClick={() => setAutomatonType('NFA')}
-            className={`py-1.5 px-3 rounded-md text-xs font-medium transition-all ${
+            className={`py-1.5 px-3 rounded-md text-xs font-medium transition-all cursor-pointer ${
               automatonType === 'NFA'
                 ? 'bg-violet-600 text-white shadow-md'
-                : 'text-zinc-400 hover:text-zinc-200'
+                : 'text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
             }`}
           >
             NFA (Non-Deterministic)
@@ -73,50 +73,50 @@ export const AutomatonInspector: React.FC = () => {
       <SimulationTester />
 
       {/* 5-Tuple Mathematical Metric Summary */}
-      <div className="rounded-xl border border-zinc-800 bg-zinc-950/60 p-4 space-y-3">
-        <div className="flex items-center justify-between text-xs py-1 border-b border-zinc-800/80">
-          <span className="flex items-center gap-2 text-zinc-400">
-            <Layers className="w-3.5 h-3.5 text-violet-400" />
+      <div className="rounded-xl border border-zinc-200 bg-white/70 dark:border-zinc-800 dark:bg-zinc-950/60 p-4 space-y-3 shadow-xs">
+        <div className="flex items-center justify-between text-xs py-1 border-b border-zinc-100 dark:border-zinc-800/80">
+          <span className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
+            <Layers className="w-3.5 h-3.5 text-violet-600 dark:text-violet-400" />
             States (Q)
           </span>
-          <span className="font-mono font-bold text-zinc-200">{validation.stateCount}</span>
+          <span className="font-mono font-bold text-zinc-900 dark:text-zinc-200">{validation.stateCount}</span>
         </div>
 
-        <div className="flex items-center justify-between text-xs py-1 border-b border-zinc-800/80">
-          <span className="flex items-center gap-2 text-zinc-400">
-            <ArrowRight className="w-3.5 h-3.5 text-blue-400" />
+        <div className="flex items-center justify-between text-xs py-1 border-b border-zinc-100 dark:border-zinc-800/80">
+          <span className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
+            <ArrowRight className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
             Transitions (δ)
           </span>
-          <span className="font-mono font-bold text-zinc-200">{validation.transitionCount}</span>
+          <span className="font-mono font-bold text-zinc-900 dark:text-zinc-200">{validation.transitionCount}</span>
         </div>
 
-        <div className="flex items-center justify-between text-xs py-1 border-b border-zinc-800/80">
-          <span className="flex items-center gap-2 text-zinc-400">
-            <Hash className="w-3.5 h-3.5 text-emerald-400" />
+        <div className="flex items-center justify-between text-xs py-1 border-b border-zinc-100 dark:border-zinc-800/80">
+          <span className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
+            <Hash className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
             Alphabet (Σ)
           </span>
-          <span className="font-mono font-bold text-zinc-200">
+          <span className="font-mono font-bold text-zinc-900 dark:text-zinc-200">
             {validation.alphabet.length > 0 ? `{ ${validation.alphabet.join(', ')} }` : '∅'}
           </span>
         </div>
 
-        <div className="flex items-center justify-between text-xs py-1 border-b border-zinc-800/80">
-          <span className="flex items-center gap-2 text-zinc-400">
-            <ArrowRight className="w-3.5 h-3.5 text-amber-400" />
+        <div className="flex items-center justify-between text-xs py-1 border-b border-zinc-100 dark:border-zinc-800/80">
+          <span className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
+            <ArrowRight className="w-3.5 h-3.5 text-amber-600 dark:text-amber-400" />
             Start State (q₀)
           </span>
-          <span className="font-mono font-bold text-zinc-200">
+          <span className="font-mono font-bold text-zinc-900 dark:text-zinc-200">
             {startStateName !== 'None' ? (
               <Badge variant="accent" size="sm">{startStateName}</Badge>
             ) : (
-              <span className="text-zinc-500 italic">None</span>
+              <span className="text-zinc-400 dark:text-zinc-500 italic">None</span>
             )}
           </span>
         </div>
 
         <div className="flex items-center justify-between text-xs py-1">
-          <span className="flex items-center gap-2 text-zinc-400">
-            <CheckCircle className="w-3.5 h-3.5 text-rose-400" />
+          <span className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
+            <CheckCircle className="w-3.5 h-3.5 text-rose-600 dark:text-rose-400" />
             Accepting States (F)
           </span>
           <div className="flex items-center gap-1">
@@ -127,7 +127,7 @@ export const AutomatonInspector: React.FC = () => {
                 ))}
               </div>
             ) : (
-              <span className="text-zinc-500 italic">0 (∅)</span>
+              <span className="text-zinc-400 dark:text-zinc-500 italic">0 (∅)</span>
             )}
           </div>
         </div>
@@ -136,7 +136,7 @@ export const AutomatonInspector: React.FC = () => {
       {/* Automaton Validation Status */}
       <div className="space-y-2">
         <div className="flex items-center justify-between">
-          <span className="text-xs font-semibold text-zinc-400">Analysis & Integrity</span>
+          <span className="text-xs font-semibold text-zinc-600 dark:text-zinc-400">Analysis & Integrity</span>
           {validation.isValid && validation.isDeterministic ? (
             <Badge variant="success" size="sm">Valid DFA</Badge>
           ) : automatonType === 'NFA' && validation.isValid ? (
@@ -147,9 +147,9 @@ export const AutomatonInspector: React.FC = () => {
         </div>
 
         {validation.warnings.length > 0 && (
-          <div className="rounded-lg border border-amber-500/20 bg-amber-500/5 p-3 space-y-1.5">
+          <div className="rounded-lg border border-amber-500/20 bg-amber-500/10 p-3 space-y-1.5 text-amber-700 dark:text-amber-400/90">
             {validation.warnings.map((warn, i) => (
-              <div key={i} className="flex items-start gap-2 text-xs text-amber-400/90">
+              <div key={i} className="flex items-start gap-2 text-xs">
                 <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                 <span>{warn}</span>
               </div>
@@ -158,9 +158,9 @@ export const AutomatonInspector: React.FC = () => {
         )}
 
         {validation.errors.length > 0 && (
-          <div className="rounded-lg border border-rose-500/20 bg-rose-500/5 p-3 space-y-1.5">
+          <div className="rounded-lg border border-rose-500/20 bg-rose-500/10 p-3 space-y-1.5 text-rose-700 dark:text-rose-400">
             {validation.errors.map((err, i) => (
-              <div key={i} className="flex items-start gap-2 text-xs text-rose-400">
+              <div key={i} className="flex items-start gap-2 text-xs">
                 <AlertTriangle className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                 <span>{err}</span>
               </div>
@@ -169,7 +169,7 @@ export const AutomatonInspector: React.FC = () => {
         )}
 
         {validation.warnings.length === 0 && validation.errors.length === 0 && states.length > 0 && (
-          <div className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
+          <div className="flex items-center gap-2 text-xs text-emerald-700 dark:text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 rounded-lg p-3">
             <CheckCircle2 className="w-4 h-4 shrink-0" />
             <span>Automaton is mathematically consistent and fully defined.</span>
           </div>
@@ -177,10 +177,10 @@ export const AutomatonInspector: React.FC = () => {
       </div>
 
       {/* Quick Actions */}
-      <div className="pt-4 border-t border-zinc-800 space-y-2">
+      <div className="pt-4 border-t border-zinc-200 dark:border-zinc-800 space-y-2">
         <button
           onClick={clearCanvas}
-          className="w-full flex items-center justify-center gap-2 rounded-lg border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-xs font-medium text-rose-400 hover:bg-rose-500/20 transition-colors"
+          className="w-full flex items-center justify-center gap-2 rounded-lg border border-rose-500/30 bg-rose-500/10 px-3 py-2 text-xs font-medium text-rose-700 dark:text-rose-400 hover:bg-rose-500/20 transition-colors cursor-pointer"
         >
           <Trash2 className="w-3.5 h-3.5" />
           Clear Entire Canvas

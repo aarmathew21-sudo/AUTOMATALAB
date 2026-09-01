@@ -144,12 +144,12 @@ export const TransitionEdge: React.FC<EdgeProps<TransitionEdgeData>> = ({
   // Professional Edge Styling
   const edgeStrokeClass = useMemo(() => {
     if (isTraversed) {
-      return 'stroke-sky-400 stroke-[2.5px] drop-shadow-[0_0_8px_rgba(56,189,248,0.8)]';
+      return 'stroke-sky-500 drop-shadow-[0_0_8px_rgba(56,189,248,0.8)] dark:stroke-sky-400 stroke-[2.5px]';
     }
     if (selected) {
-      return 'stroke-violet-400 stroke-[2.25px] drop-shadow-[0_0_8px_rgba(168,85,247,0.6)]';
+      return 'stroke-violet-600 drop-shadow-[0_0_8px_rgba(168,85,247,0.6)] dark:stroke-violet-400 stroke-[2.25px]';
     }
-    return 'stroke-zinc-500 hover:stroke-zinc-300 stroke-[1.75px]';
+    return 'stroke-zinc-400 hover:stroke-zinc-600 dark:stroke-zinc-500 dark:hover:stroke-zinc-300 stroke-[1.75px]';
   }, [isTraversed, selected]);
 
   return (
@@ -201,17 +201,17 @@ export const TransitionEdge: React.FC<EdgeProps<TransitionEdgeData>> = ({
               onChange={(e) => setEditSymbols(e.target.value)}
               onBlur={handleFinishEdit}
               onKeyDown={handleKeyDown}
-              className="w-14 bg-zinc-950 text-center text-xs font-mono font-bold text-violet-300 outline-none rounded border border-violet-400 px-1 py-0.5 shadow-xl"
+              className="w-14 bg-white text-center text-xs font-mono font-bold text-violet-900 outline-none rounded border border-violet-500 px-1 py-0.5 shadow-xl dark:bg-zinc-950 dark:text-violet-300 dark:border-violet-400"
               onClick={(e) => e.stopPropagation()}
             />
           ) : (
             <div
-              className={`flex items-center justify-center rounded px-2 py-0.5 font-mono text-[11px] font-semibold cursor-pointer select-none transition-all border shadow-sm ${
+              className={`flex items-center justify-center rounded px-2 py-0.5 font-mono text-[11px] font-semibold cursor-pointer select-none transition-all border shadow-xs ${
                 isTraversed
-                  ? 'bg-sky-950 text-sky-200 border-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.5)] scale-105'
+                  ? 'bg-sky-100 text-sky-950 border-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.5)] scale-105 dark:bg-sky-950 dark:text-sky-200 dark:border-sky-400'
                   : selected
-                  ? 'bg-violet-950 text-violet-100 border-violet-400 shadow-[0_0_8px_rgba(168,85,247,0.4)]'
-                  : 'bg-zinc-900 text-zinc-300 border-zinc-700/80 hover:border-zinc-500 hover:text-zinc-100'
+                  ? 'bg-violet-100 text-violet-950 border-violet-400 shadow-[0_0_8px_rgba(168,85,247,0.4)] dark:bg-violet-950 dark:text-violet-100 dark:border-violet-400'
+                  : 'bg-white/95 text-zinc-800 border-zinc-300 hover:border-zinc-400 hover:text-zinc-950 dark:bg-zinc-900 dark:text-zinc-300 dark:border-zinc-700/80 dark:hover:border-zinc-500 dark:hover:text-zinc-100'
               }`}
               title="Click to select, double-click to edit symbol"
             >

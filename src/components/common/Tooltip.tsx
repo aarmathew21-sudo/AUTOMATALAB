@@ -35,12 +35,12 @@ export const Tooltip: React.FC<TooltipProps> = ({
       {children}
       {isVisible && (
         <div
-          className={`absolute ${sideClasses[side]} z-50 pointer-events-none whitespace-nowrap rounded-md bg-zinc-900/95 px-2.5 py-1 text-xs font-medium text-zinc-100 shadow-xl ring-1 ring-white/10 backdrop-blur-md transition-all duration-150 animate-in fade-in zoom-in-95`}
+          className={`absolute ${sideClasses[side]} z-50 pointer-events-none whitespace-nowrap rounded-md bg-zinc-900/95 text-zinc-100 shadow-xl border border-zinc-700/50 px-2.5 py-1 text-xs font-medium dark:bg-zinc-900/95 dark:text-zinc-100 dark:ring-1 dark:ring-white/10 backdrop-blur-md transition-all duration-150 animate-in fade-in zoom-in-95`}
         >
           <div className="flex items-center gap-1.5">
             <span>{content}</span>
             {shortcut && (
-              <kbd className="rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] font-mono text-zinc-400 border border-zinc-700">
+              <kbd className="rounded bg-zinc-800 px-1.5 py-0.5 text-[10px] font-mono text-zinc-300 border border-zinc-700">
                 {shortcut}
               </kbd>
             )}

@@ -70,17 +70,17 @@ export const ImportModal: React.FC<ImportModalProps> = ({ isOpen, onClose }) => 
           <button
             type="button"
             onClick={() => fileInputRef.current?.click()}
-            className="w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-zinc-700 bg-zinc-950/50 p-4 text-xs font-medium text-zinc-400 hover:border-violet-500 hover:text-violet-300 hover:bg-violet-950/10 transition-colors"
+            className="w-full flex items-center justify-center gap-2 rounded-lg border border-dashed border-zinc-300 bg-zinc-50 p-4 text-xs font-medium text-zinc-600 hover:border-violet-500 hover:text-violet-700 hover:bg-violet-50/50 dark:border-zinc-700 dark:bg-zinc-950/50 dark:text-zinc-400 dark:hover:border-violet-500 dark:hover:text-violet-300 dark:hover:bg-violet-950/10 transition-colors cursor-pointer"
           >
-            <Upload className="w-4 h-4 text-violet-400" />
+            <Upload className="w-4 h-4 text-violet-600 dark:text-violet-400" />
             <span>Click to select a JSON file from your computer</span>
           </button>
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="h-px flex-1 bg-zinc-800" />
-          <span className="text-[11px] text-zinc-500 uppercase tracking-wider font-semibold">Or Paste Raw JSON</span>
-          <div className="h-px flex-1 bg-zinc-800" />
+          <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
+          <span className="text-[11px] text-zinc-400 dark:text-zinc-500 uppercase tracking-wider font-semibold">Or Paste Raw JSON</span>
+          <div className="h-px flex-1 bg-zinc-200 dark:bg-zinc-800" />
         </div>
 
         {/* JSON Textarea */}
@@ -90,13 +90,13 @@ export const ImportModal: React.FC<ImportModalProps> = ({ isOpen, onClose }) => 
             value={jsonText}
             onChange={(e) => setJsonText(e.target.value)}
             placeholder={`{\n  "type": "DFA",\n  "states": [\n    { "id": "q0", "name": "q0", "isStart": true },\n    { "id": "q1", "name": "q1", "isAccepting": true }\n  ],\n  "transitions": [\n    { "from": "q0", "to": "q1", "symbols": ["0"] }\n  ]\n}`}
-            className="w-full rounded-lg border border-zinc-800 bg-zinc-950 p-3 font-mono text-xs text-zinc-200 placeholder-zinc-700 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20"
+            className="w-full rounded-lg border border-zinc-200 bg-zinc-50 p-3 font-mono text-xs text-zinc-900 placeholder-zinc-400 focus:border-violet-500 focus:outline-none focus:ring-2 focus:ring-violet-500/20 dark:border-zinc-800 dark:bg-zinc-950 dark:text-zinc-200 dark:placeholder-zinc-700"
           />
         </div>
 
         {/* Error alert */}
         {errorMsg && (
-          <div className="flex items-center gap-2 rounded-lg border border-rose-500/30 bg-rose-500/10 p-3 text-xs text-rose-400">
+          <div className="flex items-center gap-2 rounded-lg border border-rose-500/30 bg-rose-500/10 p-3 text-xs text-rose-600 dark:text-rose-400">
             <AlertCircle className="w-4 h-4 shrink-0" />
             <span>{errorMsg}</span>
           </div>
@@ -106,7 +106,7 @@ export const ImportModal: React.FC<ImportModalProps> = ({ isOpen, onClose }) => 
         <div className="flex items-center justify-end gap-2.5 pt-2">
           <button
             onClick={onClose}
-            className="rounded-lg border border-zinc-800 bg-zinc-900 px-4 py-2 text-xs font-medium text-zinc-400 hover:bg-zinc-800 hover:text-zinc-200 transition-colors"
+            className="rounded-lg border border-zinc-300 bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-700 hover:bg-zinc-200 hover:text-zinc-900 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200 transition-colors cursor-pointer"
           >
             Cancel
           </button>

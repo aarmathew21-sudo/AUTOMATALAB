@@ -35,6 +35,7 @@ const edgeTypes = {
 const InnerCanvas: React.FC = () => {
   const { project } = useReactFlow();
 
+  const theme = useAutomataStore(s => s.theme);
   const states = useAutomataStore(s => s.states);
   const transitions = useAutomataStore(s => s.transitions);
   const activeTool = useAutomataStore(s => s.activeTool);
@@ -134,14 +135,14 @@ const InnerCanvas: React.FC = () => {
           selected: isSelected,
           markerEnd: {
             type: MarkerType.ArrowClosed,
-            color: isSelected ? '#a855f7' : '#71717a',
+            color: isSelected ? '#a855f7' : (theme === 'dark' ? '#71717a' : '#94a3b8'),
             width: 15,
             height: 15
           }
         };
       })
     );
-  }, [states, transitions, selectedElement, setEdges]);
+  }, [states, transitions, selectedElement, theme, setEdges]);
 
   // Force-Directed Physics Settling Loop (when enabled)
   useEffect(() => {
@@ -333,7 +334,7 @@ const InnerCanvas: React.FC = () => {
   }, [activeTool]);
 
   return (
-    <div className={`relative w-full h-full select-none overflow-hidden bg-zinc-950 ${cursorClass}`}>
+    <div className={`relative w-full h-full select-none overflow-hidden bg-slate-50 dark:bg-zinc-950 ${cursorClass} transition-colors duration-200`}>
       {/* 1. Clean Professional Background */}
       <LivingBackground />
 
@@ -370,7 +371,7 @@ const InnerCanvas: React.FC = () => {
             variant={BackgroundVariant.Dots}
             gap={20}
             size={1.1}
-            color="#27272a"
+            color={theme === 'dark' ? '#27272a' : '#cbd5e1'}
             className="opacity-70 pointer-events-none"
           />
         )}
@@ -378,8 +379,8 @@ const InnerCanvas: React.FC = () => {
         {showMinimap && (
           <MiniMap
             nodeColor="#8b5cf6"
-            maskColor="rgba(9, 9, 11, 0.75)"
-            className="!bg-zinc-900/90 !border-zinc-800 !rounded-xl overflow-hidden shadow-2xl !bottom-5 !right-5 backdrop-blur-md"
+            maskColor={theme === 'dark' ? 'rgba(9, 9, 11, 0.75)' : 'rgba(241, 245, 249, 0.75)'}
+            className="!bg-white/90 !border-zinc-300 dark:!bg-zinc-900/90 dark:!border-zinc-800 !rounded-xl overflow-hidden shadow-2xl !bottom-5 !right-5 backdrop-blur-md"
           />
         )}
 

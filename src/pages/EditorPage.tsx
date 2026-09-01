@@ -10,7 +10,7 @@ export const EditorPage: React.FC = () => {
       <LeftToolbar />
 
       {/* Center Canvas */}
-      <main className="flex-1 h-full relative overflow-hidden bg-zinc-950">
+      <main className="flex-1 h-full relative overflow-hidden bg-slate-50 dark:bg-zinc-950">
         <AutomataCanvas />
       </main>
 

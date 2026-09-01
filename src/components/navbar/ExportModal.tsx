@@ -62,7 +62,7 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
     >
       <div className="space-y-4">
         <div className="relative">
-          <pre className="max-h-72 overflow-y-auto rounded-lg border border-zinc-800 bg-zinc-950 p-4 font-mono text-xs text-violet-300 select-all">
+          <pre className="max-h-72 overflow-y-auto rounded-lg border border-zinc-200 bg-zinc-50 p-4 font-mono text-xs text-violet-700 dark:border-zinc-800 dark:bg-zinc-950 dark:text-violet-300 select-all">
             {jsonString}
           </pre>
         </div>
@@ -70,15 +70,15 @@ export const ExportModal: React.FC<ExportModalProps> = ({ isOpen, onClose }) => 
         <div className="flex items-center justify-end gap-2.5 pt-2">
           <button
             onClick={handleCopy}
-            className="flex items-center gap-2 rounded-lg border border-zinc-700 bg-zinc-800 px-4 py-2 text-xs font-medium text-zinc-200 hover:bg-zinc-700 hover:text-white transition-colors"
+            className="flex items-center gap-2 rounded-lg border border-zinc-300 bg-zinc-100 px-4 py-2 text-xs font-medium text-zinc-800 hover:bg-zinc-200 hover:text-zinc-900 dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-200 dark:hover:bg-zinc-700 dark:hover:text-white transition-colors cursor-pointer"
           >
-            {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
+            {copied ? <Check className="w-4 h-4 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-4 h-4" />}
             <span>{copied ? 'Copied!' : 'Copy to Clipboard'}</span>
           </button>
 
           <button
             onClick={handleDownload}
-            className="flex items-center gap-2 rounded-lg bg-violet-600 px-4 py-2 text-xs font-medium text-white hover:bg-violet-500 shadow-lg shadow-violet-600/30 transition-colors"
+            className="flex items-center gap-2 rounded-lg bg-violet-600 px-4 py-2 text-xs font-medium text-white hover:bg-violet-500 shadow-lg shadow-violet-600/30 transition-colors cursor-pointer"
           >
             <Download className="w-4 h-4" />
             <span>Download .json</span>

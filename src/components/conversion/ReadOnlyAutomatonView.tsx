@@ -127,8 +127,8 @@ const InnerView: React.FC<ReadOnlyAutomatonViewProps> = ({ states, transitions }
         variant={BackgroundVariant.Dots}
         gap={20}
         size={1.1}
-        color="#27272a"
-        className="opacity-70 pointer-events-none"
+        color="#71717a"
+        className="opacity-40 pointer-events-none"
       />
     </ReactFlow>
   );
@@ -136,7 +136,7 @@ const InnerView: React.FC<ReadOnlyAutomatonViewProps> = ({ states, transitions }
 
 /** Renders a computed conversion result automaton, styled to match the AutomataLab editor. */
 export const ReadOnlyAutomatonView: React.FC<ReadOnlyAutomatonViewProps> = props => (
-  <div className="relative w-full h-full min-h-[320px] bg-zinc-950 rounded-xl overflow-hidden border border-zinc-800">
+  <div className="relative w-full h-full min-h-[320px] bg-slate-100/70 dark:bg-zinc-950 rounded-xl overflow-hidden border border-zinc-300 dark:border-zinc-800 transition-colors">
     <ReactFlowProvider>
       <InnerView {...props} />
     </ReactFlowProvider>

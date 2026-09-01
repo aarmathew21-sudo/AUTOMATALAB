@@ -161,21 +161,21 @@ export const StateNode: React.FC<NodeProps<StateNodeData>> = ({ id, data, select
   // Clean Professional State Styling
   const stateBorderClass = useMemo(() => {
     if (isSimulationActive) {
-      return 'border-sky-400 bg-sky-950/80 shadow-[0_0_15px_rgba(56,189,248,0.5)]';
+      return 'border-sky-500 bg-sky-100/90 text-sky-950 shadow-[0_0_15px_rgba(56,189,248,0.5)] dark:border-sky-400 dark:bg-sky-950/80 dark:text-sky-200';
     }
     if (selected) {
-      return 'border-violet-400 bg-violet-950/70 shadow-[0_0_15px_rgba(168,85,247,0.4)] ring-2 ring-violet-500/30';
+      return 'border-violet-500 bg-violet-100/90 text-violet-950 shadow-[0_0_15px_rgba(168,85,247,0.4)] ring-2 ring-violet-500/40 dark:border-violet-400 dark:bg-violet-950/70 dark:text-violet-100 dark:ring-violet-500/30';
     }
     if (isTransitionSource) {
-      return 'border-amber-400 bg-amber-950/60 ring-2 ring-amber-500/30 animate-pulse';
+      return 'border-amber-500 bg-amber-100/90 ring-2 ring-amber-500/40 animate-pulse dark:border-amber-400 dark:bg-amber-950/60 dark:ring-amber-500/30';
     }
     if (data.isStart) {
-      return 'border-violet-500/80 bg-zinc-900/90 hover:border-violet-400';
+      return 'border-violet-600 bg-white hover:border-violet-500 dark:border-violet-500/80 dark:bg-zinc-900/90 dark:hover:border-violet-400 shadow-sm';
     }
     if (data.isAccepting) {
-      return 'border-emerald-500/80 bg-zinc-900/90 hover:border-emerald-400';
+      return 'border-emerald-600 bg-white hover:border-emerald-500 dark:border-emerald-500/80 dark:bg-zinc-900/90 dark:hover:border-emerald-400 shadow-sm';
     }
-    return 'border-zinc-600 bg-zinc-900/90 hover:border-zinc-400';
+    return 'border-zinc-400 bg-white text-zinc-900 hover:border-zinc-600 dark:border-zinc-600 dark:bg-zinc-900/90 dark:text-zinc-100 dark:hover:border-zinc-400 shadow-sm';
   }, [isSimulationActive, selected, isTransitionSource, data.isStart, data.isAccepting]);
 
   return (
@@ -192,9 +192,9 @@ export const StateNode: React.FC<NodeProps<StateNodeData>> = ({ id, data, select
       {/* Start State Incoming Arrow Indicator */}
       {data.isStart && (
         <div className="absolute -left-12 top-1/2 -translate-y-1/2 flex items-center pointer-events-none z-20">
-          <div className="flex items-center gap-0.5 rounded-md border border-violet-500/40 bg-zinc-950 px-1.5 py-0.5 shadow">
-            <span className="font-mono text-[9px] font-bold text-violet-300 uppercase tracking-wider">Start</span>
-            <ArrowRight className="w-3 h-3 text-violet-400 stroke-[2.5]" />
+          <div className="flex items-center gap-0.5 rounded-md border border-violet-500/40 bg-white dark:bg-zinc-950 px-1.5 py-0.5 shadow-sm">
+            <span className="font-mono text-[9px] font-bold text-violet-700 dark:text-violet-300 uppercase tracking-wider">Start</span>
+            <ArrowRight className="w-3 h-3 text-violet-600 dark:text-violet-400 stroke-[2.5]" />
           </div>
         </div>
       )}
@@ -211,12 +211,12 @@ export const StateNode: React.FC<NodeProps<StateNodeData>> = ({ id, data, select
           <div
             className={`absolute rounded-full pointer-events-none w-[46px] h-[46px] border-2 ${
               selected
-                ? 'border-violet-400'
+                ? 'border-violet-500 dark:border-violet-400'
                 : isSimulationActive
-                ? 'border-sky-400'
+                ? 'border-sky-500 dark:border-sky-400'
                 : isTransitionSource
-                ? 'border-amber-400'
-                : 'border-emerald-400/80'
+                ? 'border-amber-500 dark:border-amber-400'
+                : 'border-emerald-500/90 dark:border-emerald-400/80'
             }`}
           />
         )}
@@ -231,17 +231,17 @@ export const StateNode: React.FC<NodeProps<StateNodeData>> = ({ id, data, select
               onChange={(e) => setEditName(e.target.value)}
               onBlur={handleFinishRename}
               onKeyDown={handleKeyDown}
-              className="w-11 bg-zinc-950 text-center text-xs font-mono font-bold text-violet-300 outline-none rounded border border-violet-400 px-0.5 py-0.5"
+              className="w-11 bg-white text-center text-xs font-mono font-bold text-violet-800 outline-none rounded border border-violet-500 px-0.5 py-0.5 shadow-xs dark:bg-zinc-950 dark:text-violet-300 dark:border-violet-400"
               onClick={(e) => e.stopPropagation()}
             />
           ) : (
             <span
               className={`truncate max-w-[38px] tracking-tight ${
                 isSimulationActive
-                  ? 'text-sky-200 font-bold'
+                  ? 'text-sky-950 dark:text-sky-200 font-bold'
                   : selected
-                  ? 'text-violet-100 font-bold'
-                  : 'text-zinc-100'
+                  ? 'text-violet-950 dark:text-violet-100 font-bold'
+                  : 'text-zinc-900 dark:text-zinc-100'
               }`}
               title={data.name}
             >

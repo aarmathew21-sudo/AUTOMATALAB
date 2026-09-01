@@ -24,20 +24,20 @@ export const Toast: React.FC = () => {
   };
 
   const borders = {
-    success: 'border-emerald-500/30 bg-zinc-900/90 text-zinc-200',
-    error: 'border-rose-500/30 bg-zinc-900/90 text-zinc-200',
-    warning: 'border-amber-500/30 bg-zinc-900/90 text-zinc-200',
-    info: 'border-blue-500/30 bg-zinc-900/90 text-zinc-200'
+    success: 'border-emerald-500/30 bg-white/95 text-zinc-900 shadow-emerald-500/10 dark:bg-zinc-900/90 dark:text-zinc-200',
+    error: 'border-rose-500/30 bg-white/95 text-zinc-900 shadow-rose-500/10 dark:bg-zinc-900/90 dark:text-zinc-200',
+    warning: 'border-amber-500/30 bg-white/95 text-zinc-900 shadow-amber-500/10 dark:bg-zinc-900/90 dark:text-zinc-200',
+    info: 'border-blue-500/30 bg-white/95 text-zinc-900 shadow-blue-500/10 dark:bg-zinc-900/90 dark:text-zinc-200'
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 rounded-lg border px-4 py-3 shadow-2xl backdrop-blur-md transition-all animate-in fade-in slide-in-from-bottom-4 duration-200">
-      <div className={`flex items-center gap-2.5 ${borders[toast.type]}`}>
+    <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 transition-all animate-in fade-in slide-in-from-bottom-4 duration-200">
+      <div className={`flex items-center gap-2.5 rounded-lg border px-4 py-3 shadow-2xl backdrop-blur-md ${borders[toast.type]}`}>
         {icons[toast.type]}
         <span className="text-sm font-medium pr-2">{toast.message}</span>
         <button
           onClick={dismissToast}
-          className="ml-auto text-zinc-400 hover:text-zinc-100 transition-colors p-0.5 rounded"
+          className="ml-auto text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-100 transition-colors p-0.5 rounded cursor-pointer"
           aria-label="Dismiss toast"
         >
           <X className="w-3.5 h-3.5" />

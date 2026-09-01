@@ -78,7 +78,7 @@ export const LeftToolbar: React.FC = () => {
   ];
 
   return (
-    <aside className="w-16 border-r border-zinc-800 bg-zinc-900/90 backdrop-blur-md flex flex-col items-center py-4 justify-between select-none z-20 shrink-0">
+    <aside className="w-16 border-r border-zinc-200 bg-white/90 dark:border-zinc-800 dark:bg-zinc-900/90 backdrop-blur-md flex flex-col items-center py-4 justify-between select-none z-20 shrink-0 transition-colors duration-200">
       {/* Tool items list */}
       <div className="flex flex-col items-center gap-2 w-full px-2">
         {tools.map(tool => {
@@ -92,10 +92,10 @@ export const LeftToolbar: React.FC = () => {
             >
               <button
                 onClick={() => setActiveTool(tool.id)}
-                className={`group relative flex h-11 w-11 items-center justify-center rounded-xl transition-all duration-150 ${
+                className={`group relative flex h-11 w-11 items-center justify-center rounded-xl transition-all duration-150 cursor-pointer ${
                   isActive
                     ? 'bg-violet-600 text-white shadow-lg shadow-violet-600/30 ring-2 ring-violet-400/50'
-                    : 'text-zinc-400 hover:bg-zinc-800/80 hover:text-zinc-100'
+                    : 'text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800/80 dark:hover:text-zinc-100'
                 }`}
                 aria-label={tool.label}
               >
@@ -110,15 +110,15 @@ export const LeftToolbar: React.FC = () => {
       </div>
 
       {/* Undo & Redo quick actions in toolbar */}
-      <div className="flex flex-col items-center gap-2 w-full px-2 pt-4 border-t border-zinc-800">
+      <div className="flex flex-col items-center gap-2 w-full px-2 pt-4 border-t border-zinc-200 dark:border-zinc-800">
         <Tooltip content="Undo" shortcut="Ctrl+Z" side="right">
           <button
             onClick={undo}
             disabled={!canUndo}
             className={`flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
               canUndo
-                ? 'text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100'
-                : 'text-zinc-600 cursor-not-allowed'
+                ? 'text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 cursor-pointer'
+                : 'text-zinc-300 dark:text-zinc-600 cursor-not-allowed'
             }`}
             aria-label="Undo"
           >
@@ -132,8 +132,8 @@ export const LeftToolbar: React.FC = () => {
             disabled={!canRedo}
             className={`flex h-10 w-10 items-center justify-center rounded-lg transition-colors ${
               canRedo
-                ? 'text-zinc-300 hover:bg-zinc-800 hover:text-zinc-100'
-                : 'text-zinc-600 cursor-not-allowed'
+                ? 'text-zinc-700 hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-zinc-100 cursor-pointer'
+                : 'text-zinc-300 dark:text-zinc-600 cursor-not-allowed'
             }`}
             aria-label="Redo"
           >
