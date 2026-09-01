@@ -4,7 +4,7 @@ import { TopNavbar } from './components/navbar/TopNavbar';
 import { HomePage } from './pages/HomePage';
 import { EditorPage } from './pages/EditorPage';
 import { PracticePage } from './pages/PracticePage';
-import { LearnPage } from './pages/LearnPage';
+import { ConversionLabPage } from './pages/ConversionLabPage';
 import { Toast } from './components/common/Toast';
 
 export function App() {
@@ -176,7 +176,7 @@ export function App() {
         {activePage === 'home' && <HomePage />}
         {activePage === 'editor' && <EditorPage />}
         {activePage === 'practice' && <PracticePage />}
-        {activePage === 'learn' && <LearnPage />}
+        {activePage === 'convert' && <ConversionLabPage />}
       </div>
 
       {/* Global Toast Notification System */}

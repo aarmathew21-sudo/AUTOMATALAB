@@ -106,4 +106,4 @@ export interface SimulationState {
   }[];
 }
 
-export type NavigationPage = 'home' | 'editor' | 'practice' | 'learn';
+export type NavigationPage = 'home' | 'editor' | 'practice' | 'convert';

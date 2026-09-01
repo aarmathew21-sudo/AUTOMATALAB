@@ -22,37 +22,55 @@ export const HomePage: React.FC = () => {
       title: 'Visual Automata Designer',
       description: 'Create states, transitions, self-loops, and multi-symbol edges with fluid drag-and-drop mechanics.',
       icon: <Layers className="w-6 h-6 text-violet-400" />,
-      badge: 'Interactive'
+      badge: 'Interactive',
+      buttonText: 'Open Editor',
+      onClick: () => setActivePage('editor')
     },
     {
       title: 'Step-by-Step Simulation',
       description: 'Trace input strings step-by-step with live highlighted active state paths and instant acceptance results.',
       icon: <Play className="w-6 h-6 text-emerald-400" />,
-      badge: 'Simulation'
+      badge: 'Simulation',
+      buttonText: 'Test Simulation',
+      onClick: () => {
+        loadPreset('ends-with-01');
+        setActivePage('editor');
+      }
     },
     {
       title: 'DFA / NFA Analysis',
       description: 'Automatic 5-tuple verification, determinism diagnostics, alphabet extraction, and dead-state detection.',
       icon: <ShieldCheck className="w-6 h-6 text-blue-400" />,
-      badge: 'Formal Math'
+      badge: 'Formal Math',
+      buttonText: 'Run Diagnostics',
+      onClick: () => setActivePage('editor')
     },
     {
       title: 'Automata Conversion',
-      description: 'Subset construction algorithm to convert non-deterministic NFAs (with ε-transitions) into equivalent DFAs.',
+      description: 'Convert between Regex, ε-NFA, NFA, and DFA representations with step-by-step construction algorithms.',
       icon: <Shuffle className="w-6 h-6 text-amber-400" />,
-      badge: 'Algorithms'
+      badge: 'Algorithms',
+      buttonText: 'Open Conversion Lab',
+      onClick: () => setActivePage('convert')
     },
     {
-      title: 'DFA Minimization',
-      description: 'Hopcroft and table-filling algorithms to merge indistinguishable states into minimal canonical DFAs.',
+      title: 'DFA Minimization & Models',
+      description: 'Explore canonical automata models, parity checkers, modulo binary counters, and minimal states.',
       icon: <Minimize2 className="w-6 h-6 text-rose-400" />,
-      badge: 'Optimization'
+      badge: 'Models',
+      buttonText: 'Try Presets',
+      onClick: () => {
+        loadPreset('divisible-by-3');
+        setActivePage('editor');
+      }
     },
     {
-      title: 'Interactive Learning',
-      description: 'Structured theory curriculum and hands-on practice challenges tailored for students and computer scientists.',
+      title: 'Interactive Challenges',
+      description: 'Structured theory exercises and hands-on practice challenges tailored for computer scientists.',
       icon: <GraduationCap className="w-6 h-6 text-indigo-400" />,
-      badge: 'Education'
+      badge: 'Practice',
+      buttonText: 'Start Challenges',
+      onClick: () => setActivePage('practice')
     }
   ];
 
@@ -88,7 +106,7 @@ export const HomePage: React.FC = () => {
         <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
           <button
             onClick={() => setActivePage('editor')}
-            className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-violet-600 font-semibold text-sm text-white shadow-xl shadow-violet-600/30 hover:bg-violet-500 transition-all hover:scale-[1.02] active:scale-[0.98]"
+            className="group relative inline-flex items-center gap-2.5 px-7 py-3.5 rounded-xl bg-violet-600 font-semibold text-sm text-white shadow-xl shadow-violet-600/30 hover:bg-violet-500 transition-all hover:scale-[1.02] active:scale-[0.98] cursor-pointer"
           >
             <span>Open Automata Lab</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -99,7 +117,7 @@ export const HomePage: React.FC = () => {
               loadPreset('ends-with-01');
               setActivePage('editor');
             }}
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-zinc-800 bg-zinc-900/80 font-medium text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white hover:border-zinc-700 transition-colors"
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl border border-zinc-800 bg-zinc-900/80 font-medium text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white hover:border-zinc-700 transition-colors cursor-pointer"
           >
             <Code2 className="w-4 h-4 text-violet-400" />
             <span>Try Sample DFA</span>
@@ -177,18 +195,28 @@ export const HomePage: React.FC = () => {
           {featureCards.map((card, index) => (
             <div
               key={index}
-              className="group relative rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 transition-all duration-200 hover:border-zinc-700 hover:bg-zinc-900/80 hover:shadow-xl"
+              onClick={card.onClick}
+              className="group relative rounded-2xl border border-zinc-800 bg-zinc-900/50 p-6 flex flex-col justify-between transition-all duration-200 hover:border-zinc-700 hover:bg-zinc-900/80 hover:shadow-xl cursor-pointer"
             >
-              <div className="flex items-center justify-between mb-4">
-                <div className="p-3 rounded-xl bg-zinc-800/80 group-hover:scale-105 transition-transform">
-                  {card.icon}
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="p-3 rounded-xl bg-zinc-800/80 group-hover:scale-105 transition-transform">
+                    {card.icon}
+                  </div>
+                  <Badge variant="outline" size="sm">
+                    {card.badge}
+                  </Badge>
                 </div>
-                <Badge variant="outline" size="sm">
-                  {card.badge}
-                </Badge>
+                <h3 className="text-lg font-semibold text-zinc-100 mb-2 group-hover:text-violet-300 transition-colors">
+                  {card.title}
+                </h3>
+                <p className="text-sm text-zinc-400 leading-relaxed">{card.description}</p>
               </div>
-              <h3 className="text-lg font-semibold text-zinc-100 mb-2">{card.title}</h3>
-              <p className="text-sm text-zinc-400 leading-relaxed">{card.description}</p>
+
+              <div className="mt-6 pt-4 border-t border-zinc-800/80 flex items-center justify-between text-xs font-semibold text-violet-400 group-hover:text-violet-300">
+                <span>{card.buttonText}</span>
+                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+              </div>
             </div>
           ))}
         </div>

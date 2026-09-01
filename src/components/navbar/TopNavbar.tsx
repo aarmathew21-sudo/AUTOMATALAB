@@ -8,7 +8,7 @@ import {
   Upload, 
   Moon, 
   Sun,
-  BookOpen,
+  Shuffle,
   Trophy,
   PenTool,
   Home
@@ -90,15 +90,15 @@ export const TopNavbar: React.FC = () => {
             </button>
 
             <button
-              onClick={() => setActivePage('learn')}
+              onClick={() => setActivePage('convert')}
               className={`flex items-center gap-1.5 px-3 py-1 text-xs font-medium rounded-lg transition-all ${
-                activePage === 'learn'
+                activePage === 'convert'
                   ? 'bg-zinc-800 text-zinc-100 shadow-sm'
                   : 'text-zinc-400 hover:text-zinc-200'
               }`}
             >
-              <BookOpen className="w-3.5 h-3.5" />
-              <span>Learn</span>
+              <Shuffle className="w-3.5 h-3.5" />
+              <span>Convert</span>
             </button>
           </nav>
         </div>
