@@ -230,8 +230,10 @@ export function ardensTheorem(dfa: FormalAutomaton): ArdensTheoremResult {
 
   const alphabet = Array.from(dfa.alphabet).sort();
   if (alphabet.length > 0) {
+    const sigma = alphabet.length === 1 ? alphabet[0] : `(${alphabet.join('|')})`;
     const sigmaStar = alphabet.length === 1 ? `${alphabet[0]}*` : `(${alphabet.join('|')})*`;
-    const paths = getShortestPaths(dfa);
+    const sigmaSigmaStar = `${sigma}${sigmaStar}`;
+    const paths = getShortestPaths(dfa, 20, 10);
 
     for (const p of paths) {
       if (p === '') {
@@ -241,8 +243,21 @@ export function ardensTheorem(dfa: FormalAutomaton): ArdensTheoremResult {
         candidates.add(`${sigmaStar}${p}`);
         candidates.add(`${p}${sigmaStar}`);
         candidates.add(`${sigmaStar}${p}${sigmaStar}`);
+        candidates.add(`${sigmaSigmaStar}${p}`);
+        candidates.add(`${p}${sigmaSigmaStar}`);
+        candidates.add(`${sigma}${p}`);
         candidates.add(`(${p})*`);
         candidates.add(`(${sigmaStar}${p})*`);
+        candidates.add(`(${sigmaSigmaStar}${p})*`);
+
+        // Check sub-suffixes of p
+        for (let s = 1; s < p.length; s++) {
+          const suffix = p.slice(s);
+          candidates.add(`${sigmaStar}${suffix}`);
+          candidates.add(`${sigmaSigmaStar}${suffix}`);
+          candidates.add(`${sigma}${suffix}`);
+          candidates.add(`${sigmaStar}${suffix}${sigmaStar}`);
+        }
       }
     }
 
@@ -253,6 +268,7 @@ export function ardensTheorem(dfa: FormalAutomaton): ArdensTheoremResult {
         candidates.add(`${sigmaStar}(${pUnion})`);
         candidates.add(`(${pUnion})${sigmaStar}`);
         candidates.add(`${sigmaStar}(${pUnion})${sigmaStar}`);
+        candidates.add(`${sigmaSigmaStar}(${pUnion})`);
         candidates.add(`(${pUnion})*`);
       }
     }
