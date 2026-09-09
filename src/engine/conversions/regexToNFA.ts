@@ -1,28 +1,32 @@
-/**
- * REGEX → NFA Pipeline: Regex → ε-NFA → DFA (Minimized) → NFA
- */
-
 import { type RegexNode } from '../regex/ast';
 import { type FormalAutomaton, type ConversionResult } from '../types/conversion';
-import { regexToDFA } from './regexToDFA';
+import { regexToENFA } from './regexToENFA';
+import { enfaToNFA } from './enfaToNFA';
+import { reduceNFA } from '../algorithms/nfaReduction';
 
 export function regexToNFA(regexNode: RegexNode): ConversionResult {
-  const dfaResult = regexToDFA(regexNode);
-  if (!dfaResult.success || typeof dfaResult.result === 'string') {
-    return { ...dfaResult, sourceKind: 'REGEX', targetKind: 'NFA' };
+  const enfaResult = regexToENFA(regexNode);
+  if (!enfaResult.success || typeof enfaResult.result === 'string') {
+    return { ...enfaResult, sourceKind: 'REGEX', targetKind: 'NFA' };
   }
-  const dfa = dfaResult.result as FormalAutomaton;
-  const nfa: FormalAutomaton = {
-    ...dfa,
-    kind: 'NFA',
-  };
+  const enfa = enfaResult.result as FormalAutomaton;
+
+  const nfaResult = enfaToNFA(enfa);
+  if (!nfaResult.success || typeof nfaResult.result === 'string') {
+    return { ...nfaResult, sourceKind: 'REGEX', targetKind: 'NFA' };
+  }
+  const rawNFA = nfaResult.result as FormalAutomaton;
+
+  const { nfa: reducedNFA, steps: reductionSteps } = reduceNFA(rawNFA);
 
   return {
     success: true,
     sourceKind: 'REGEX',
     targetKind: 'NFA',
-    steps: dfaResult.steps,
-    result: nfa,
-    intermediates: dfaResult.intermediates,
+    steps: [...enfaResult.steps, ...nfaResult.steps, ...reductionSteps],
+    result: reducedNFA,
+    intermediates: [
+      { kind: 'ENFA', value: enfa, label: 'ε-NFA (Thompson construction)' },
+    ],
   };
 }
