@@ -24,6 +24,8 @@ import {
   type FormalAutomaton
 } from '../engine/conversions';
 
+import { autoSaveState } from '../engine/storage';
+
 const KIND_LABELS: Record<AutomatonKind, string> = {
   REGEX: 'Regex',
   ENFA: 'ε-NFA',
@@ -32,6 +34,14 @@ const KIND_LABELS: Record<AutomatonKind, string> = {
 };
 
 const KIND_ORDER: AutomatonKind[] = ['REGEX', 'ENFA', 'NFA', 'DFA'];
+
+function getTargetKinds(source: AutomatonKind): AutomatonKind[] {
+  // Remove trivial DFA -> NFA and DFA -> ε-NFA conversions
+  if (source === 'DFA') {
+    return ['REGEX'];
+  }
+  return KIND_ORDER.filter(k => k !== source);
+}
 
 const DEFAULT_REGEX = '(a|b)*abb';
 
@@ -87,11 +97,17 @@ export const ConversionLabPage: React.FC = () => {
 
   const canConvert = !isIdentical && sourceIsReady && !isConverting;
 
+  const targetOptions = useMemo(() => getTargetKinds(sourceKind), [sourceKind]);
+
   const handleSourceKindChange = (kind: AutomatonKind) => {
     setSourceKind(kind);
     setSelectedSampleId(null);
     setResult(null);
     setError(null);
+    const allowedTargets = getTargetKinds(kind);
+    if (!allowedTargets.includes(targetKind)) {
+      setTargetKind(allowedTargets[0]);
+    }
   };
 
   const handleTargetKindChange = (kind: AutomatonKind) => {
@@ -180,6 +196,31 @@ export const ConversionLabPage: React.FC = () => {
     };
   }, [result, resultAutomaton]);
 
+  const handleLoadIntoEditor = () => {
+    if (!resultUi || !resultAutomaton) return;
+    useAutomataStore.getState().snapshotHistory();
+    const kind = resultUi.kind === 'ENFA' ? 'ENFA' : resultUi.kind === 'NFA' ? 'NFA' : 'DFA';
+    useAutomataStore.setState({
+      states: resultUi.states,
+      transitions: resultUi.transitions,
+      startStateId: resultUi.startStateId,
+      acceptingStateIds: resultUi.acceptingStateIds,
+      automatonType: kind,
+      selectedElement: null,
+      simulationState: null,
+      stateCounter: resultUi.states.length + 1,
+    });
+    autoSaveState(
+      resultUi.states,
+      resultUi.transitions,
+      kind,
+      resultUi.startStateId,
+      resultUi.acceptingStateIds
+    );
+    useAutomataStore.getState().showToast('Converted automaton loaded into Editor', 'success');
+    setActivePage('editor');
+  };
+
   return (
     <div className="flex-1 overflow-y-auto bg-slate-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 p-8 flex flex-col items-center transition-colors duration-200">
       <div className="w-full max-w-5xl space-y-8">
@@ -238,7 +279,7 @@ export const ConversionLabPage: React.FC = () => {
                 onChange={e => handleTargetKindChange(e.target.value as AutomatonKind)}
                 className="w-full rounded-lg border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500 dark:border-zinc-700 dark:bg-zinc-950 dark:text-zinc-100"
               >
-                {KIND_ORDER.map(kind => (
+                {targetOptions.map(kind => (
                   <option key={kind} value={kind}>
                     {KIND_LABELS[kind]}
                   </option>
@@ -395,7 +436,18 @@ export const ConversionLabPage: React.FC = () => {
         {result && (
           <>
             <div className="rounded-2xl border border-zinc-200 bg-white p-6 space-y-4 dark:border-zinc-800 dark:bg-zinc-900/60 shadow-xs">
-              <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">Result</h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">Result</h2>
+                {resultUi && (
+                  <button
+                    onClick={handleLoadIntoEditor}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-xs font-medium shadow-xs transition-colors cursor-pointer"
+                  >
+                    <PenTool className="w-3.5 h-3.5" />
+                    <span>Bring into Current Editor</span>
+                  </button>
+                )}
+              </div>
 
               {typeof result.result === 'string' ? (
                 <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-5 py-6 flex items-center justify-center dark:border-zinc-800 dark:bg-zinc-950">
