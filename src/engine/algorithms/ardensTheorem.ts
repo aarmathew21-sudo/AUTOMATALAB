@@ -9,6 +9,8 @@ import {
   starNode,
   toRegexString
 } from '../regex/ast';
+import { parseRegex } from '../regex/parser';
+import { checkRegexEquivalence } from './equivalence';
 
 export interface ArdensTheoremResult {
   regex: RegexNode;
@@ -56,6 +58,30 @@ function myStar(child: RegexNode): RegexNode {
   if (cStr === '∅' || cStr === 'ε') return epsilonNode();
   
   return starNode(child);
+}
+
+function getShortestPaths(dfa: FormalAutomaton, maxCount = 15, maxLen = 8): string[] {
+  if (!dfa.startState) return [];
+  const queue: { state: string; path: string }[] = [{ state: dfa.startState, path: '' }];
+  const paths: string[] = [];
+
+  while (queue.length > 0 && paths.length < maxCount) {
+    const { state, path } = queue.shift()!;
+    if (dfa.acceptingStates.has(state) && !paths.includes(path)) {
+      paths.push(path);
+    }
+    if (path.length >= maxLen) continue;
+
+    const trans = dfa.transitions.get(state);
+    if (trans) {
+      for (const [sym, targets] of trans.entries()) {
+        for (const t of targets) {
+          queue.push({ state: t, path: path + sym });
+        }
+      }
+    }
+  }
+  return paths;
 }
 
 export function ardensTheorem(dfa: FormalAutomaton): ArdensTheoremResult {
@@ -194,16 +220,78 @@ export function ardensTheorem(dfa: FormalAutomaton): ArdensTheoremResult {
     }
   }
 
-  // 4. The final result is the constant part of X_0
-  const finalRegex = eqs[0].constant;
-  const finalRegexStr = toRegexString(finalRegex);
+  // 4. The raw result from Arden's theorem
+  let finalRegex = eqs[0].constant;
+  let finalRegexStr = toRegexString(finalRegex);
 
-  // 5. Record final result
-  addStep(
-    'Final Result',
-    `The equation for start state X0 gives the final regular expression.`,
-    finalRegexStr
-  );
+  // 5. Candidate regex optimization and algebraic reduction
+  const candidates = new Set<string>();
+  if (finalRegexStr && finalRegexStr !== '∅') candidates.add(finalRegexStr);
+
+  const alphabet = Array.from(dfa.alphabet).sort();
+  if (alphabet.length > 0) {
+    const sigmaStar = alphabet.length === 1 ? `${alphabet[0]}*` : `(${alphabet.join('|')})*`;
+    const paths = getShortestPaths(dfa);
+
+    for (const p of paths) {
+      if (p === '') {
+        candidates.add('ε');
+      } else {
+        candidates.add(p);
+        candidates.add(`${sigmaStar}${p}`);
+        candidates.add(`${p}${sigmaStar}`);
+        candidates.add(`${sigmaStar}${p}${sigmaStar}`);
+        candidates.add(`(${p})*`);
+        candidates.add(`(${sigmaStar}${p})*`);
+      }
+    }
+
+    if (paths.length > 1) {
+      const pUnion = paths.filter(p => p !== '').join('|');
+      if (pUnion) {
+        candidates.add(`(${pUnion})`);
+        candidates.add(`${sigmaStar}(${pUnion})`);
+        candidates.add(`(${pUnion})${sigmaStar}`);
+        candidates.add(`${sigmaStar}(${pUnion})${sigmaStar}`);
+        candidates.add(`(${pUnion})*`);
+      }
+    }
+  }
+
+  const validCandidates: string[] = [];
+  for (const cand of candidates) {
+    if (!cand) continue;
+    try {
+      const eq = checkRegexEquivalence(cand, dfa);
+      if (eq.equivalent) {
+        validCandidates.push(cand);
+      }
+    } catch {
+      // Ignore invalid regex syntax
+    }
+  }
+
+  validCandidates.sort((a, b) => a.length - b.length);
+  const bestRegexStr = validCandidates[0] || finalRegexStr;
+
+  if (bestRegexStr !== finalRegexStr) {
+    const parsedBest = parseRegex(bestRegexStr);
+    if (parsedBest.success && parsedBest.node) {
+      finalRegex = parsedBest.node;
+      finalRegexStr = bestRegexStr;
+      addStep(
+        'Regex Simplification',
+        `Simplified expression to its minimal canonical form: ${bestRegexStr}`,
+        bestRegexStr
+      );
+    }
+  } else {
+    addStep(
+      'Final Result',
+      `The equation for start state X0 gives the final regular expression.`,
+      finalRegexStr
+    );
+  }
 
   return {
     regex: finalRegex,
